@@ -40,12 +40,16 @@ describe('Products Controller', function () {
 	})
 
 	it('Get products by id that doesnt exist', async function() {
-		sinon.stub(productsModel, 'findById').resolves(null)
-		const response = await productsService.findProductsById(4)
-		expect(response).to.be.deep.equal({
+		const req = { params: { id: 6 } }
+		const res = {}
+		res.status = sinon.stub().returns(res)
+		res.json = sinon.stub().returns()
+		sinon.stub(productsService, 'findProductsById').resolves({
 			status: 'NOT_FOUND',
 			data: { message: 'Product not found' }
 		})
+		await productsController.getProductsById(req, res)
+		expect(res.status).to.have.been.calledWith(404)
 	})
 
 	afterEach(sinon.restore)
