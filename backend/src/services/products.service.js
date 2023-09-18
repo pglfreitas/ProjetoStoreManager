@@ -20,7 +20,19 @@ const findProductsById = async (id) => {
 	}
 }
 
+const registerProducts = async (name) => {
+	const result = await productsModel.insert(name)
+	return {
+		status: 'SUCCESSFUL',
+		data: {
+			id: result,
+			name,
+		}
+	}
+}
+
 module.exports = {
 	findAllProducts,
 	findProductsById,
+	registerProducts
 }

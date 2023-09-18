@@ -52,5 +52,21 @@ describe('Products Controller', function () {
 		expect(res.status).to.have.been.calledWith(404)
 	})
 
+	it('Register new products', async function() {
+		const req = { body: { name: 'produtox' } }
+		const res = {}
+		res.status = sinon.stub().returns(res)
+		res.json = sinon.stub().returns()
+		sinon.stub(productsService, 'registerProducts').resolves({
+			status: 'SUCCESSFUL',
+			data: { 
+				id: 1,
+				name: 'produtox'
+			 }
+		})
+		await productsController.registerNewProducts(req, res)
+		expect(res.status).to.have.been.calledWith(201)
+	})
+
 	afterEach(sinon.restore)
 })

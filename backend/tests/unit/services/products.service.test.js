@@ -36,5 +36,17 @@ describe('Products Service', function () {
 		})
 	})
 
+	it('Regoster new products', async function() {
+		sinon.stub(productsModel, 'insert').resolves(4)
+		const response = await productsService.registerProducts('produtox')
+		expect(response).to.be.deep.equal({
+			status: 'SUCCESSFUL',
+			data: { 
+				id: 4,
+				name: 'produtox'
+			 }
+		})
+	})
+
 	afterEach(sinon.restore)
 })

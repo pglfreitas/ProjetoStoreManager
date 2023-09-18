@@ -3,6 +3,7 @@ const { productsRoutes, salesRoutes } = require('./routes')
 
 const app = express();
 
+app.use(express.json())
 app.use('/products', productsRoutes)
 app.use('/products/:id', productsRoutes)
 app.use('/sales', salesRoutes)
