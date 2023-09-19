@@ -17,7 +17,17 @@ const getSalesById = async (req, res) => {
 	return res.status(200).json(response.data)
 }
 
+const registerNewSales = async (req, res) => {
+	const sales = req.body
+	const response = await salesService.registerSales(sales)
+	if (response.status !== 'SUCCESSFUL') {
+		return res.status(404).json(response.data)
+	}
+	return res.status(201).json(response.data)
+}
+
   module.exports = {
 	getAllSales,
 	getSalesById,
+	registerNewSales
   }

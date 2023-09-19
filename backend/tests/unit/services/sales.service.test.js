@@ -36,5 +36,29 @@ describe('Sales Service', function () {
 		})
 	})
 
+	it('Register new sale', async function() {
+		sinon.stub(salesModel, 'insert').resolves({
+			id:3,
+			itemsSold: [{
+				productId: 2,
+				quantity: 5,
+			}]
+		})
+		const response = await salesService.registerSales([{
+			productId: 2,
+			quantity: 5,
+		}])
+		expect(response).to.be.deep.equal({
+			status: 'SUCCESSFUL',
+			data: { 
+				id:3,
+				itemsSold: [{
+					productId: 2,
+					quantity: 5,
+				}]
+			 }
+		})
+	})
+
 	afterEach(sinon.restore)
 })

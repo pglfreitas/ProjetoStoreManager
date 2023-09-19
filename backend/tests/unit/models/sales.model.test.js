@@ -21,5 +21,22 @@ describe('Sales Model', function () {
 		expect(response).to.be.equal(salesMock[0])
 	})
 
+	it('Register new sales', async function() {
+		sinon.stub(connection, 'execute').resolves([{
+			insertId: 3,
+		}])
+		const response = await salesModel.insert([{
+			productId: 2,
+			quantity: 5,
+		}])
+		expect(response).to.be.deep.equal({
+			id:3,
+			itemsSold: [{
+				productId: 2,
+				quantity: 5,
+			}]
+		})
+	})
+
 	afterEach(sinon.restore)
 })

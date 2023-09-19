@@ -52,5 +52,31 @@ describe('sales Controller', function () {
 		expect(res.status).to.have.been.calledWith(404)
 	})
 
+	it('Register new sales', async function() {
+		const req = { body: { 
+			sales: [
+			{
+			  productId: 2,
+			  quantity: 5
+			}
+		  ]}
+		}
+		const res = {}
+		res.status = sinon.stub().returns(res)
+		res.json = sinon.stub().returns()
+		sinon.stub(salesService, 'registerSales').resolves({
+			status: 'SUCCESSFUL',
+			data: { 
+				id: 3,
+				itemsSold: [{
+					productId: 2,
+					quantity: 5,
+				}]
+			 }
+		})
+		await salesController.registerNewSales(req, res)
+		expect(res.status).to.have.been.calledWith(201)
+	})
+
 	afterEach(sinon.restore)
 })
