@@ -23,8 +23,19 @@ const registerNewProducts = async (req, res) => {
 	return res.status(201).json(response.data)
 }
 
+const updateProducts = async (req, res) => {
+	const { id } = req.params
+	const { name } = req.body
+	const response = await productsService.updateProducts(id,name)
+	if (response.status !== 'SUCCESSFUL') {
+		return res.status(404).json(response.data)
+	}
+	return res.status(200).json(response.data)
+}
+
   module.exports = {
 	getAllProducts,
 	getProductsById,
-	registerNewProducts
+	registerNewProducts,
+	updateProducts
   }

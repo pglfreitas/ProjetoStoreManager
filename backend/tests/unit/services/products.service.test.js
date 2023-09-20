@@ -36,7 +36,7 @@ describe('Products Service', function () {
 		})
 	})
 
-	it('Regoster new products', async function() {
+	it('Register new products', async function() {
 		sinon.stub(productsModel, 'insert').resolves(4)
 		const response = await productsService.registerProducts('produtox')
 		expect(response).to.be.deep.equal({
@@ -45,6 +45,22 @@ describe('Products Service', function () {
 				id: 4,
 				name: 'produtox'
 			 }
+		})
+	})
+
+	it('Updates products', async function() {
+		sinon.stub(productsModel, 'findById').resolves({})
+		sinon.stub(productsModel, 'update').resolves({
+			id: 1,
+			name: 'produtox'
+		})
+		const response = await productsService.updateProducts(1, 'produtox')
+		expect(response).to.be.deep.equal({
+			status: 'SUCCESSFUL',
+			data: {
+				id: 1,
+				name: 'produtox'
+			}
 		})
 	})
 

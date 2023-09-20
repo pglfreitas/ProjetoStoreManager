@@ -29,5 +29,17 @@ describe('Products Model', function () {
 		const response = await productsModel.insert('produtox')
 		expect(response).to.be.equal(4)
 	})
+
+	it('Updates products', async function() {
+		sinon.stub(connection, 'execute').resolves([[{
+			id: 1,
+			name: 'produtox'
+		}]])
+		const response = await productsModel.update()
+		expect(response).to.be.deep.equal({
+			id: 1,
+			name: 'produtox'
+		})
+	})
 	afterEach(sinon.restore)
 })
